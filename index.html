@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SmartSymptom AI</title>
+
+<style>
+body {
+    font-family: Arial;
+    background-color: #f5f7fa;
+    padding: 40px;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+input {
+    width: 70%;
+    padding: 8px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#result {
+    margin-top: 15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SmartSymptom AI</h1>
+
+<p>Enter symptoms:</p>
+
+<input id="symptoms" type="text" placeholder="fever, headache">
+
+<button onclick="checkSymptoms()">Check Symptoms</button>
+
+<h3>AI Response:</h3>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+async function checkSymptoms() {
+
+    let symptoms = document.getElementById("symptoms").value;
+
+    let response = await fetch("/check?symptoms=" + symptoms);
+
+    let data = await response.json();
+
+    document.getElementById("result").innerText = data.analysis;
+}
+</script>
+
+</body>
+</html>
