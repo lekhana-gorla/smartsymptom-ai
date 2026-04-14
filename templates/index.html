@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SmartSymptom AI</title>
 
+<style>
+body {
+    font-family: Arial;
+    background-color: #f5f7fa;
+    padding: 40px;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+input {
+    width: 70%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+#result {
+    margin-top: 15px;
+    line-height: 1.6;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SmartSymptom AI</h1>
+
+<p>Enter symptoms:</p>
+
+<input 
+id="symptoms" 
+type="text" 
+placeholder="fever, headache"
+oninput="document.getElementById('result').innerText=''"
+>
+
+<button onclick="checkSymptoms()">Check Symptoms</button>
+
+<h3>AI Response:</h3>
+
+<p id="result"></p>
+
+<p style="color: gray; font-size: 12px;">
+This AI tool provides informational guidance only and does not replace professional medical advice.
+</p>
+
+</div>
+
+<script>
+
+async function checkSymptoms() {
+
+    let symptoms = document.getElementById("symptoms").value;
+
+    if(symptoms.trim() === ""){
+        document.getElementById("result").innerText = "Please enter symptoms.";
+        return;
+    }
+
+    // show loading message
+    document.getElementById("result").innerText = "Analyzing symptoms...";
+
+    let response = await fetch("/check?symptoms=" + symptoms);
+
+    let data = await response.json();
+
+    document.getElementById("result").innerText = data.analysis;
+}
+
+</script>
+
+</body>
+</html>
